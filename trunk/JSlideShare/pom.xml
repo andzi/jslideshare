@@ -7,6 +7,14 @@
     <version>1.0-SNAPSHOT</version>
     <name>JSlideShare</name>
     <url>http://code.google.com/p/jslideshare/</url>
+    <repositories>
+        <repository>
+            <id>parancoe-org-repository</id>
+            <name>Parancoe Repository for Maven</name>
+            <url>http://maven2.parancoe.org/repo</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
     <build>
         <plugins>
             <plugin>
@@ -54,7 +62,67 @@
             <artifactId>log4j</artifactId>
             <version>1.2.14</version>
             <scope>compile</scope>
-        </dependency>
-        
+        </dependency>        
     </dependencies>
+    <distributionManagement>
+        <repository>
+            <id>parancoe-org-repository</id>
+            <url>scp://maven2.parancoe.org/home/web/maven2.parancoe.org/repository/repo</url>
+            <layout>default</layout>
+        </repository>
+    </distributionManagement>
+    <scm>
+        <connection>scm:svn:http://jslideshare.googlecode.com/svn/trunk</connection>
+        <developerConnection>scm:svn:https://jslideshare.googlecode.com/svn/trunk</developerConnection>
+        <url>http://jslideshare.googlecode.com/svn/trunk</url>
+    </scm>
+    <issueManagement>
+        <system>Google Code Issues</system>
+        <url>http://code.google.com/p/jslideshare/issues/list</url>
+    </issueManagement>
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+    <organization>
+        <name>JSlideShare Team</name>
+        <url>http://code.google.com/p/jslideshare/</url>
+    </organization>
+    <mailingLists>
+        <mailingList>
+            <name>Developers</name>
+            <subscribe>jslideshare-dev-subscribe@googlegroups.com</subscribe>
+            <unsubscribe>jslideshare-dev-unsubscribe@googlegroups.com</unsubscribe>
+            <post>jslideshare-dev@googlegroups.com</post>
+            <archive>http://groups.google.com/group/jslideshare-dev</archive>
+        </mailingList>
+        <mailingList>
+            <name>Users</name>
+            <subscribe>jslideshare-users-subscribe@googlegroups.com</subscribe>
+            <unsubscribe>jslideshare-users-unsubscribe@googlegroups.com</unsubscribe>
+            <post>jslideshare-users@googlegroups.com</post>
+            <archive>http://groups.google.com/group/jslideshare-users</archive>
+        </mailingList>
+    </mailingLists>
+    <developers>
+        <developer>
+            <id>benfante</id>
+            <name>Lucio Benfante</name>
+            <email>lucio.benfante@jugpadova.it</email>
+            <url>http://benfante.blogspot.com</url>
+            <organization>Lucio Benfante Consulting</organization>
+            <organizationUrl>http://www.benfante.com</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+1</timezone>
+            <properties>
+                <picUrl>http://farm1.static.flickr.com/35/70560671_64adac2288_o.png</picUrl>
+            </properties>
+        </developer>
+    </developers>    
 </project>
