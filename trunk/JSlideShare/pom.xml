@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.benfante</groupId>
     <artifactId>JSlideShare</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1</version>
     <name>JSlideShare</name>
     <url>http://code.google.com/p/jslideshare/</url>
     <repositories>
@@ -72,9 +71,9 @@
         </repository>
     </distributionManagement>
     <scm>
-        <connection>scm:svn:http://jslideshare.googlecode.com/svn/trunk</connection>
-        <developerConnection>scm:svn:https://jslideshare.googlecode.com/svn/trunk</developerConnection>
-        <url>http://jslideshare.googlecode.com/svn/trunk</url>
+        <connection>scm:svn:http://jslideshare.googlecode.com/svn/tags/JSlideShare-0.1</connection>
+        <developerConnection>scm:svn:https://jslideshare.googlecode.com/svn/tags/JSlideShare-0.1</developerConnection>
+        <url>http://jslideshare.googlecode.com/svn/tags/JSlideShare-0.1</url>
     </scm>
     <issueManagement>
         <system>Google Code Issues</system>
