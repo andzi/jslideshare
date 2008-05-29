@@ -17,6 +17,7 @@ import com.benfante.jslideshare.messages.Group;
 import com.benfante.jslideshare.messages.Slideshow;
 import com.benfante.jslideshare.messages.Tag;
 import com.benfante.jslideshare.messages.User;
+import java.io.File;
 
 /**
  * Methods of the <a href="http://www.slideshare.net/developers/documentation">SlideShare API</a>.
@@ -57,7 +58,7 @@ public interface SlideShareAPI {
      * @throws com.benfante.jslideshare.SlideShareException In case of a SlideShareServiceError
      * @throws com.benfante.jslideshare.SlideShareErrorException In case of an error using the service (IO error, timeouts, http status other than OK, etc.)
      */
-    User getSlideshowByUser(String username, int offset, int limit) throws 
+    User getSlideshowByUser(String username, int offset, int limit) throws
             SlideShareException, SlideShareErrorException;
 
     /**
@@ -81,7 +82,7 @@ public interface SlideShareAPI {
      * @throws com.benfante.jslideshare.SlideShareException In case of a SlideShareServiceError
      * @throws com.benfante.jslideshare.SlideShareErrorException In case of an error using the service (IO error, timeouts, http status other than OK, etc.)
      */
-    Tag getSlideshowByTag(String tag, int offset, int limit) throws 
+    Tag getSlideshowByTag(String tag, int offset, int limit) throws
             SlideShareException, SlideShareErrorException;
 
     /**
@@ -105,6 +106,45 @@ public interface SlideShareAPI {
      * @throws com.benfante.jslideshare.SlideShareException In case of a SlideShareServiceError
      * @throws com.benfante.jslideshare.SlideShareErrorException In case of an error using the service (IO error, timeouts, http status other than OK, etc.)
      */
-    Group getSlideshowByGroup(String groupName, int offset, int limit) throws 
+    Group getSlideshowByGroup(String groupName, int offset, int limit) throws
             SlideShareException, SlideShareErrorException;
+
+    /**
+     * Retrieve slideshows with a given tag.
+     * 
+     * @param username The username of the account that will host the upload
+     * @param password The password of the account that will host the upload
+     * @param title The title of the presentation
+     * @param src The PPT presentation
+     * @param description The description of the presentation (optional, it can be null)
+     * @param tags Some tags for the presentation. Tags must be space separates. Use quotes for multiple word tags.
+     * @param makeSrcPublic Should be true if you want users to be able to download the ppt file later.
+     * @param makeSlideshowPrivate Should be true if you want to upload the slideshow privately
+     * @param generateSecretUrl Generate a secret URL for the slideshow. Requires makeSlideshowPrivate to be true
+     * @param allowEmbeds Sets if other websites should be allowed to embed the slideshow. Requires makeSlideshowPrivate to be true.
+     * @param shareWithContacts Sets if your contacts on Slideshare can view the slideshow. Requires make_slideshow_private to be true.
+     * @return The id of the just created Slideshow
+     * @throws com.benfante.jslideshare.SlideShareException In case of a SlideShareServiceError
+     * @throws com.benfante.jslideshare.SlideShareErrorException In case of an error using the service (IO error, timeouts, http status other than OK, etc.)
+     */
+    String uploadSlideshow(String username, String password, String title,
+            File src, String description, String tags, boolean makeSrcPublic,
+            boolean makeSlideshowPrivate, boolean generateSecretUrl,
+            boolean allowEmbeds, boolean shareWithContacts)
+            throws SlideShareException, SlideShareErrorException;
+    
+    /**
+     * Retrieve a slideshow using its id.
+     * 
+     * @param username The username of the account that will delete the slideshow
+     * @param password The password of the account that will delete the slideshow
+     * @param id The slideshow id
+     * @return The slideshow
+     * @throws com.benfante.jslideshare.SlideShareException In case of a SlideShareServiceError
+     * @throws com.benfante.jslideshare.SlideShareErrorException In case of an error using the service (IO error, timeouts, http status other than OK, etc.)
+     */
+// TODO: verify if this method is still available in te API
+//    String deleteSlideshow(String username, String password, String id) throws SlideShareException,
+//            SlideShareErrorException;
+    
 }

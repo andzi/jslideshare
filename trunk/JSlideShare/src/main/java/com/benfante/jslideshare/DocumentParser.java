@@ -43,7 +43,10 @@ public class DocumentParser extends DefaultHandler {
     public static final String NAME_TAG = "name";
     public static final String PERMALINK_TAG = "Permalink";
     public static final String SLIDESHOWS_TAG = "Slideshows";
+    public static final String SLIDESHOW_ID_TAG = "SlideShowID";
     public static final String SLIDESHOW_TAG = "Slideshow";
+    public static final String SLIDESHOW_UPLOADED_TAG = "SlideShowUploaded";
+    public static final String SLIDESHOW_DELETED_TAG = "SlideShowDeleted";
     public static final String STATUS_DESCRIPTION_TAG = "StatusDescription";
     public static final String STATUS_TAG = "Status";
     public static final String TAGS_TAG = "Tags";
@@ -62,6 +65,7 @@ public class DocumentParser extends DefaultHandler {
     private String tempId;
     private String tempName;
     private int tempCount;
+    private String tempSlideShowId;
     private DocumentParserResult parserResult;
 
     private DocumentParser() {
@@ -141,6 +145,12 @@ public class DocumentParser extends DefaultHandler {
             tempGroup.setSlideshows(tempSlideshows);
             createResult();
             this.parserResult.setGroup(tempGroup);
+        } else if (qName.equalsIgnoreCase(SLIDESHOW_UPLOADED_TAG)) {
+            createResult();
+            this.parserResult.setSlideShowId(tempSlideShowId);
+        } else if (qName.equalsIgnoreCase(SLIDESHOW_DELETED_TAG)) {
+            createResult();
+            this.parserResult.setSlideShowId(tempSlideShowId);
         } else if (qName.equalsIgnoreCase(MESSAGE_TAG)) {
             throw new SlideShareException(secureParseInt(tempId, -1),
                     tempVal.toString());
@@ -166,6 +176,8 @@ public class DocumentParser extends DefaultHandler {
             tempName = tempVal.toString();
         } else if (qName.equalsIgnoreCase(COUNT_TAG)) {
             tempCount = secureParseInt(tempVal.toString(), -1);
+        } else if (qName.equalsIgnoreCase(SLIDESHOW_ID_TAG)) {
+            tempSlideShowId = tempVal.toString();
         }
     }
 
