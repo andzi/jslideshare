@@ -17,6 +17,7 @@ import com.benfante.jslideshare.messages.Group;
 import com.benfante.jslideshare.messages.Slideshow;
 import com.benfante.jslideshare.messages.Tag;
 import com.benfante.jslideshare.messages.User;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -40,6 +41,10 @@ public class SlideShareAPIImpl implements SlideShareAPI {
             "http://www.slideshare.net/api/1/get_slideshow_by_tag";
     public static final String URL_GET_SLIDESHOW_BY_GROUP =
             "http://www.slideshare.net/api/1/get_slideshow_from_group";
+    public static final String URL_UPLOAD_SLIDESHOW =
+            "http://www.slideshare.net/api/1/upload_slideshow";
+    public static final String URL_DELETE_SLIDESHOW =
+            "http://www.slideshare.net/api/1/delete_slideshow";
     protected SlideShareConnector connector;
 
     public SlideShareAPIImpl() {
@@ -60,18 +65,9 @@ public class SlideShareAPIImpl implements SlideShareAPI {
     public Slideshow getSlideshow(String id) throws SlideShareException,
             SlideShareErrorException {
         logger.info("Called getSlideshow with id=" + id);
-        Slideshow result = null;
         Map<String, String> parameters = new HashMap<String, String>();
-        parameters.put("slideshow_id", id);
-        try {
-            InputStream response = connector.sendMessage(URL_GET_SLIDESHOW,
-                    parameters);
-            result = DocumentParser.parse(response).getSlideShow();
-        } catch (IOException iOException) {
-            throw new SlideShareErrorException(-1, "Error getting the slideshow",
-                    iOException);
-        }
-        return result;
+        addParameter(parameters, "slideshow_id", id);
+        return sendMessage(URL_GET_SLIDESHOW, parameters).getSlideShow();
     }
 
     public User getSlideshowByUser(String username) throws SlideShareException,
@@ -84,25 +80,10 @@ public class SlideShareAPIImpl implements SlideShareAPI {
             throws SlideShareException, SlideShareErrorException {
         logger.info("Called getSlideshowByUser with username=" + username +
                 ", offset=" + offset + ", limit=" + limit);
-        User result = null;
         Map<String, String> parameters = new HashMap<String, String>();
-        parameters.put("username_for", username);
-        if (offset >= 0) {
-            parameters.put("offset", Integer.toString(offset));
-        }
-        if (limit >= 0) {
-            parameters.put("limit", Integer.toString(limit));
-        }
-        try {
-            InputStream response = connector.sendMessage(
-                    URL_GET_SLIDESHOW_BY_USER, parameters);
-            result = DocumentParser.parse(response).getUser();
-        } catch (IOException iOException) {
-            throw new SlideShareErrorException(-1,
-                    "Error getting the slideshow by user",
-                    iOException);
-        }
-        return result;
+        addParameter(parameters, "username_for", username);
+        addLimits(parameters, offset, limit);
+        return sendMessage(URL_GET_SLIDESHOW_BY_USER, parameters).getUser();
     }
 
     public Tag getSlideshowByTag(String tag) throws SlideShareException,
@@ -115,28 +96,14 @@ public class SlideShareAPIImpl implements SlideShareAPI {
             SlideShareException, SlideShareErrorException {
         logger.info("Called getSlideshowByTag with tag=" + tag +
                 ", offset=" + offset + ", limit=" + limit);
-        Tag result = null;
         Map<String, String> parameters = new HashMap<String, String>();
-        parameters.put("tag", tag);
-        if (offset >= 0) {
-            parameters.put("offset", Integer.toString(offset));
-        }
-        if (limit >= 0) {
-            parameters.put("limit", Integer.toString(limit));
-        }
-        try {
-            InputStream response = connector.sendMessage(
-                    URL_GET_SLIDESHOW_BY_TAG, parameters);
-            result = DocumentParser.parse(response).getTag();
-        } catch (IOException iOException) {
-            throw new SlideShareErrorException(-1,
-                    "Error getting the slideshow by tag",
-                    iOException);
-        }
-        return result;
+        addParameter(parameters, "tag", tag);
+        addLimits(parameters, offset, limit);
+        return sendMessage(URL_GET_SLIDESHOW_BY_TAG, parameters).getTag();
     }
 
-    public Group getSlideshowByGroup(String groupName) throws SlideShareException,
+    public Group getSlideshowByGroup(String groupName) throws
+            SlideShareException,
             SlideShareErrorException {
         logger.info("Called getSlideshowByGroup with groupName=" + groupName);
         return getSlideshowByGroup(groupName, -1, -1);
@@ -146,25 +113,116 @@ public class SlideShareAPIImpl implements SlideShareAPI {
             throws SlideShareException, SlideShareErrorException {
         logger.info("Called getSlideshowByGrop with groupName=" + groupName +
                 ", offset=" + offset + ", limit=" + limit);
-        Group result = null;
         Map<String, String> parameters = new HashMap<String, String>();
-        parameters.put("group_name", groupName);
+        addParameter(parameters, "group_name", groupName);
+        addLimits(parameters, offset, limit);
+        return sendMessage(URL_GET_SLIDESHOW_BY_GROUP, parameters).getGroup();
+    }
+
+    public String uploadSlideshow(String username, String password, String title,
+            File src, String description, String tags, boolean makeSrcPublic,
+            boolean makeSlideshowPrivate, boolean generateSecretUrl,
+            boolean allowEmbeds, boolean shareWithContacts) throws
+            SlideShareException,
+            SlideShareErrorException {
+        logger.info("Called uploadSlideshow with username=" + username +
+                ", password=XXX, title=" + title + ", description=" +
+                description + ", tags=" + tags + ", makeSrcPublic=" +
+                makeSrcPublic + ", makeSlideshowPrivate=" + makeSlideshowPrivate +
+                ", generateSecretUrl=" + generateSecretUrl + ", allowEmbeds=" +
+                allowEmbeds + ", shareWithContacts=" + shareWithContacts);
+        Map<String, String> parameters = new HashMap<String, String>();
+        addParameter(parameters, "username", username);
+        addParameter(parameters, "password", password);
+        addParameter(parameters, "slideshow_title", title);
+        addParameter(parameters, "slideshow_description", description);
+        addParameter(parameters, "slideshow_tags", tags);
+        addParameter(parameters, "make_src_public", makeSrcPublic);
+        addParameter(parameters, "make_slideshow_private", makeSlideshowPrivate);
+        addParameter(parameters, "generate_secret_url", generateSecretUrl);
+        addParameter(parameters, "allow_embeds", allowEmbeds);
+        addParameter(parameters, "share_with_contacts", shareWithContacts);
+        Map<String, File> files = new HashMap<String, File>();
+        files.put("slideshow_srcfile", src);
+        return sendMessage(URL_UPLOAD_SLIDESHOW, parameters, files).getSlideShowId();
+    }
+
+// TODO: verify if this method is still available in te API
+//    public String deleteSlideshow(String username, String password, String id)
+//            throws SlideShareException, SlideShareErrorException {
+//        logger.info("Called deleteSlideshow with username=" + username +
+//                ", password=XXX, id=" + id);
+//        Map<String, String> parameters = new HashMap<String, String>();
+//        addParameter(parameters, "username", username);
+//        addParameter(parameters, "password", password);
+//        addParameter(parameters, "slideshow_id", id);
+//        return sendGetMessage(URL_DELETE_SLIDESHOW, parameters).getSlideShowId();
+//    }
+
+    private Map<String, String> addParameter(Map<String, String> parameters,
+            String name, String value) {
+        if (value != null) {
+            parameters.put(name, value);
+        }
+        return parameters;
+    }
+
+    private Map<String, String> addParameter(Map<String, String> parameters,
+            String name, boolean value) {
+        parameters.put(name, value ? "Y" : "N");
+        return parameters;
+    }
+
+    private Map<String, String> addLimits(Map<String, String> parameters,
+            int offset, int limit) {
         if (offset >= 0) {
             parameters.put("offset", Integer.toString(offset));
         }
         if (limit >= 0) {
             parameters.put("limit", Integer.toString(limit));
         }
+        return parameters;
+    }
+
+    private DocumentParserResult sendMessage(String url,
+            Map<String, String> parameters) throws SlideShareErrorException {
+        DocumentParserResult result;
         try {
-            InputStream response = connector.sendMessage(
-                    URL_GET_SLIDESHOW_BY_GROUP, parameters);
-            result = DocumentParser.parse(response).getGroup();
+            InputStream response = connector.sendMessage(url, parameters);
+            result = DocumentParser.parse(response);
         } catch (IOException iOException) {
             throw new SlideShareErrorException(-1,
-                    "Error getting the slideshow by group",
-                    iOException);
+                    "Error sending a message to the url " + url, iOException);
         }
         return result;
     }
 
+    private DocumentParserResult sendGetMessage(String url,
+            Map<String, String> parameters) throws SlideShareErrorException {
+        DocumentParserResult result;
+        try {
+            InputStream response = connector.sendGetMessage(url, parameters);
+            result = DocumentParser.parse(response);
+        } catch (IOException iOException) {
+            throw new SlideShareErrorException(-1,
+                    "Error sending a message to the url " + url, iOException);
+        }
+        return result;
+    }
+    
+    private DocumentParserResult sendMessage(String url,
+            Map<String, String> parameters, Map<String, File> files) throws
+            SlideShareErrorException {
+        DocumentParserResult result;
+        try {
+            InputStream response = connector.sendMultiPartMessage(url,
+                    parameters, files);
+            result = DocumentParser.parse(response);
+        } catch (IOException iOException) {
+            throw new SlideShareErrorException(-1,
+                    "Error sending a multipart message to the url " + url,
+                    iOException);
+        }
+        return result;
+    }
 }

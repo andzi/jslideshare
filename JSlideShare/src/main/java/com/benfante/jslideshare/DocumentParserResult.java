@@ -31,6 +31,7 @@ public class DocumentParserResult {
     private User user;
     private Tag tag;
     private Group group;
+    private String slideShowId;
 
     public List<Slideshow> getSlideShows() {
         return slideShows;
@@ -64,6 +65,14 @@ public class DocumentParserResult {
         this.group = group;
     }
 
+    public String getSlideShowId() {
+        return slideShowId;
+    }
+
+    public void setSlideShowId(String slideShowId) {
+        this.slideShowId = slideShowId;
+    }
+    
     public Slideshow getSlideShow() {
         Slideshow result = null;
         if (slideShows != null && !slideShows.isEmpty()) {

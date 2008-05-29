@@ -13,6 +13,7 @@
 // limitations under the License.
 package com.benfante.jslideshare;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
@@ -31,6 +32,18 @@ class MockSlideShareConnector implements SlideShareConnector {
 
     public InputStream sendMessage(String url,
             Map<String, String> parameters) throws IOException {
+        return this.getClass().getClassLoader().getResourceAsStream(resource);
+    }
+
+    public InputStream sendGetMessage(String url,
+            Map<String, String> parameters) throws IOException {
+        return this.getClass().getClassLoader().getResourceAsStream(resource);
+    }
+    
+    public InputStream sendMultiPartMessage(String url,
+            Map<String, String> parameters,
+            Map<String, File> files) throws IOException,
+            SlideShareErrorException {
         return this.getClass().getClassLoader().getResourceAsStream(resource);
     }
 

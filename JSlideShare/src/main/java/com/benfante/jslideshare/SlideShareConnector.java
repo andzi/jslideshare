@@ -13,6 +13,7 @@
 // limitations under the License.
 package com.benfante.jslideshare;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
@@ -23,5 +24,14 @@ import java.util.Map;
  * @author Lucio Benfante (<a href="mailto:lucio@benfante.com">lucio@benfante.com</a>)
  */
 public interface SlideShareConnector {
-    InputStream sendMessage(String url, Map<String, String> parameters) throws IOException;
+
+    InputStream sendMessage(String url, Map<String, String> parameters) throws
+            IOException, SlideShareErrorException;
+
+    InputStream sendGetMessage(String url, Map<String, String> parameters) throws
+            IOException, SlideShareErrorException;
+    
+    InputStream sendMultiPartMessage(String url, Map<String, String> parameters,
+            Map<String, File> files) throws IOException,
+            SlideShareErrorException;
 }

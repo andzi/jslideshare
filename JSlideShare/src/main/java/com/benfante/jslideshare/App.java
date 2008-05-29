@@ -13,21 +13,25 @@
 // limitations under the License.
 package com.benfante.jslideshare;
 
+import java.io.File;
+
 /**
  * Only for naively trying the API on "the real".
  *
- *
+ * @author Lucio Benfante (<a href="mailto:lucio@benfante.com">lucio@benfante.com</a>)
  */
 public class App {
 
     private static final String API_KEY = "your api-key here";
     private static final String SHARED_SECRET = "your shared-secret here";
+    private static final String USERNAME = "your username here";
+    private static final String PASSWORD = "your password here";
+    private static final File SRC_FILE = new File("your file path here");
 
     public static void main(String[] args) throws Exception {
-        SlideShareConnector connector = new SlideShareConnectorImpl(API_KEY,
-                SHARED_SECRET, 10000);
-        SlideShareAPI ssapi = new SlideShareAPIImpl(connector);
-        System.out.println(ssapi.getSlideshow("414888"));
+        SlideShareAPI ssapi = SlideShareAPIFactory.getSlideShareAPI(API_KEY,
+                SHARED_SECRET);
+        System.out.println(ssapi.getSlideshow("142806"));
         Thread.sleep(2000);
         System.out.println(ssapi.getSlideshowByUser("john.leach"));
         Thread.sleep(2000);
@@ -40,5 +44,18 @@ public class App {
         System.out.println(ssapi.getSlideshowByGroup("javaday-italy"));
         Thread.sleep(2000);
         System.out.println(ssapi.getSlideshowByGroup("javaday-italy", 1, 2));
+        Thread.sleep(2000);
+        String newSlideshowId = ssapi.uploadSlideshow(USERNAME, PASSWORD,
+                "My new title", SRC_FILE, null, null, true, false, false, false,
+                false);
+        System.out.println("Added "+newSlideshowId);
+        Thread.sleep(2000);
+        System.out.println(ssapi.getSlideshow(newSlideshowId));
+//        Thread.sleep(10000);
+//        String deletedSlidehowId = ssapi.deleteSlideshow(USERNAME, PASSWORD,
+//                newSlideshowId);
+//        System.out.println("Deleted "+deletedSlidehowId);
+//        Thread.sleep(10000);
+//        System.out.println(ssapi.getSlideshow(deletedSlidehowId));
     }
 }
