@@ -27,6 +27,13 @@ public class SlideShareAPIFactory {
     private SlideShareAPIFactory() {
     }
 
+    /**
+     * Provide a SlideShareAPI object.
+     * 
+     * @param api_key Your API key
+     * @param shared_secret Your Shared Secret
+     * @return The SlideShareAPI object
+     */
     public static SlideShareAPI getSlideShareAPI(String api_key,
             String shared_secret) {
         SlideShareConnector connector = new SlideShareConnectorImpl(api_key,
@@ -34,10 +41,38 @@ public class SlideShareAPIFactory {
         return new SlideShareAPIImpl(connector);
     }
 
+    /**
+     * Provide a SlideShareAPI object.
+     * 
+     * @param api_key Your API key
+     * @param shared_secret Your Shared Secret
+     * @param timeout A connection timeout. 0 for no timeouts.
+     * @return The SlideShareAPI object
+     */
     public static SlideShareAPI getSlideShareAPI(String api_key,
             String shared_secret, int timeout) {
         SlideShareConnector connector = new SlideShareConnectorImpl(api_key,
                 shared_secret, timeout);
+        return new SlideShareAPIImpl(connector);
+    }
+
+    /**
+     * Provide a SlideShareAPI object.
+     * 
+     * @param api_key Your API key
+     * @param shared_secret Your Shared Secret
+     * @param timeout A connection timeout. 0 for no timeouts.
+     * @param proxyHost The proxy host (DNS or IP). Can be null.
+     * @param proxyPort The proxy TCP port. -1 for using the default port.
+     * @param proxyUsername The proxy username. Can be null, for no authentication.
+     * @param proxyPassword The proxy password. Can be null, for no authentication.
+     * @return The SlideShareAPI object
+     */
+    public static SlideShareAPI getSlideShareAPI(String api_key,
+            String shared_secret, int timeout, String proxyHost, int proxyPort,
+            String proxyUsername, String proxyPassword) {
+        SlideShareConnector connector = new SlideShareConnectorImpl(api_key,
+                shared_secret, timeout, proxyHost, proxyPort, proxyUsername, proxyPassword);
         return new SlideShareAPIImpl(connector);
     }
 }
