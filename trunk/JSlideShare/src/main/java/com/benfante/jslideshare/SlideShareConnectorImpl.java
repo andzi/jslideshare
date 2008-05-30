@@ -27,6 +27,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.FilePart;
@@ -47,19 +49,34 @@ public class SlideShareConnectorImpl implements SlideShareConnector {
     protected String apiKey;
     protected String sharedSecret;
     protected int soTimeout;
+    protected String proxyHost;
+    protected int proxyPort = -1;
+    protected String proxyUsername;
+    protected String proxyPassword;
 
     public SlideShareConnectorImpl() {
     }
 
     public SlideShareConnectorImpl(String apiKey, String sharedSecret) {
-        this(apiKey, sharedSecret, 0);
+        this();
+        this.apiKey = apiKey;
+        this.sharedSecret = sharedSecret;                
     }
 
     public SlideShareConnectorImpl(String apiKey, String sharedSecret,
             int soTimeout) {
-        this.apiKey = apiKey;
-        this.sharedSecret = sharedSecret;
+        this(apiKey, sharedSecret);
         this.soTimeout = soTimeout;
+    }
+
+    public SlideShareConnectorImpl(String apiKey, String sharedSecret,
+            int soTimeout, String proxyHost, int proxyPort,
+            String proxyUsername, String proxyPassword) {
+        this(apiKey, sharedSecret, soTimeout);
+        this.proxyHost = proxyHost;
+        this.proxyPort = proxyPort;
+        this.proxyUsername = proxyUsername;
+        this.proxyPassword = proxyPassword;
     }
 
     public String getApiKey() {
@@ -86,10 +103,41 @@ public class SlideShareConnectorImpl implements SlideShareConnector {
         this.soTimeout = soTimeout;
     }
 
+    public String getProxyHost() {
+        return proxyHost;
+    }
+
+    public void setProxyHost(String proxyHost) {
+        this.proxyHost = proxyHost;
+    }
+
+    public String getProxyPassword() {
+        return proxyPassword;
+    }
+
+    public void setProxyPassword(String proxyPassword) {
+        this.proxyPassword = proxyPassword;
+    }
+
+    public int getProxyPort() {
+        return proxyPort;
+    }
+
+    public void setProxyPort(int proxyPort) {
+        this.proxyPort = proxyPort;
+    }
+
+    public String getProxyUsername() {
+        return proxyUsername;
+    }
+
+    public void setProxyUsername(String proxyUsername) {
+        this.proxyUsername = proxyUsername;
+    }
+
     public InputStream sendMessage(String url, Map<String, String> parameters)
             throws IOException, SlideShareErrorException {
-        HttpClient client = new HttpClient();
-        client.getParams().setSoTimeout(this.soTimeout);
+        HttpClient client = createHttpClient();
         PostMethod method = new PostMethod(url);
         method.addParameter("api_key", this.apiKey);
         Iterator<Map.Entry<String, String>> entryIt =
@@ -124,7 +172,7 @@ public class SlideShareConnectorImpl implements SlideShareConnector {
     public InputStream sendMultiPartMessage(String url,
             Map<String, String> parameters, Map<String, File> files)
             throws IOException, SlideShareErrorException {
-        HttpClient client = new HttpClient();
+        HttpClient client = createHttpClient();
         PostMethod method = new PostMethod(url);
         List<Part> partList = new ArrayList();
         partList.add(createStringPart("api_key", this.apiKey));
@@ -170,10 +218,9 @@ public class SlideShareConnectorImpl implements SlideShareConnector {
 
     public InputStream sendGetMessage(String url, Map<String, String> parameters)
             throws IOException, SlideShareErrorException {
-        HttpClient client = new HttpClient();
-        client.getParams().setSoTimeout(this.soTimeout);
+        HttpClient client = createHttpClient();
         GetMethod method = new GetMethod(url);
-        NameValuePair[] params = new NameValuePair[parameters.size()+3];
+        NameValuePair[] params = new NameValuePair[parameters.size() + 3];
         int i = 0;
         params[i++] = new NameValuePair("api_key", this.apiKey);
         Iterator<Map.Entry<String, String>> entryIt =
@@ -205,7 +252,7 @@ public class SlideShareConnectorImpl implements SlideShareConnector {
         method.releaseConnection();
         return result;
     }
-    
+
     private StringPart createStringPart(String name, String value) {
         StringPart stringPart = new StringPart(name, value);
         stringPart.setContentType(null);
@@ -214,11 +261,26 @@ public class SlideShareConnectorImpl implements SlideShareConnector {
         return stringPart;
     }
 
-    private FilePart createFilePart(String name, File value) throws 
+    private FilePart createFilePart(String name, File value) throws
             FileNotFoundException {
         FilePart filePart = new FilePart(name, value);
         filePart.setTransferEncoding(null);
         filePart.setCharSet(null);
         return filePart;
+    }
+
+    private HttpClient createHttpClient() {
+        HttpClient client = new HttpClient();
+        client.getParams().setSoTimeout(this.soTimeout);
+        if (this.getProxyHost() != null) {
+            client.getHostConfiguration().setProxy(this.proxyHost,
+                    this.proxyPort);
+            if (this.proxyUsername != null && this.proxyPassword != null) {
+                client.getState().setProxyCredentials(AuthScope.ANY,
+                        new UsernamePasswordCredentials(this.proxyUsername,
+                        this.proxyPassword));
+            }
+        }
+        return client;
     }
 }
