@@ -15,6 +15,7 @@ package com.benfante.jslideshare;
 
 import com.benfante.jslideshare.messages.Group;
 import com.benfante.jslideshare.messages.Slideshow;
+import com.benfante.jslideshare.messages.SlideshowInfo;
 import com.benfante.jslideshare.messages.Tag;
 import com.benfante.jslideshare.messages.User;
 import java.util.LinkedList;
@@ -27,7 +28,8 @@ import java.util.List;
  */
 public class DocumentParserResult {
 
-    private List<Slideshow> slideShows = new LinkedList();
+    private List<Slideshow> slideShows = new LinkedList<Slideshow>();
+    private SlideshowInfo slideShowInfo = new SlideshowInfo();
     private User user;
     private Tag tag;
     private Group group;
@@ -41,6 +43,14 @@ public class DocumentParserResult {
         this.slideShows = slideShows;
     }
 
+    public SlideshowInfo getSlideShowInfo() {
+        return slideShowInfo;
+    }
+
+    public void setSlideShowInfo(SlideshowInfo slideShowInfo) {
+        this.slideShowInfo = slideShowInfo;
+    }
+        
     public User getUser() {
         return user;
     }
@@ -72,7 +82,7 @@ public class DocumentParserResult {
     public void setSlideShowId(String slideShowId) {
         this.slideShowId = slideShowId;
     }
-    
+
     public Slideshow getSlideShow() {
         Slideshow result = null;
         if (slideShows != null && !slideShows.isEmpty()) {
@@ -80,4 +90,5 @@ public class DocumentParserResult {
         }
         return result;
     }
+        
 }

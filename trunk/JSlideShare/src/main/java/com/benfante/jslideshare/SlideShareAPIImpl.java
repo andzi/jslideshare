@@ -15,6 +15,7 @@ package com.benfante.jslideshare;
 
 import com.benfante.jslideshare.messages.Group;
 import com.benfante.jslideshare.messages.Slideshow;
+import com.benfante.jslideshare.messages.SlideshowInfo;
 import com.benfante.jslideshare.messages.Tag;
 import com.benfante.jslideshare.messages.User;
 import java.io.File;
@@ -35,6 +36,8 @@ public class SlideShareAPIImpl implements SlideShareAPI {
             SlideShareAPIImpl.class);
     public static final String URL_GET_SLIDESHOW =
             "http://www.slideshare.net/api/1/get_slideshow";
+    public static final String URL_GET_SLIDESHOW_INFO =
+            "http://www.slideshare.net/api/1/get_slideshow_info";
     public static final String URL_GET_SLIDESHOW_BY_USER =
             "http://www.slideshare.net/api/1/get_slideshow_by_user";
     public static final String URL_GET_SLIDESHOW_BY_TAG =
@@ -68,6 +71,16 @@ public class SlideShareAPIImpl implements SlideShareAPI {
         Map<String, String> parameters = new HashMap<String, String>();
         addParameter(parameters, "slideshow_id", id);
         return sendMessage(URL_GET_SLIDESHOW, parameters).getSlideShow();
+    }
+
+    public SlideshowInfo getSlideshowInfo(String id, String url) throws 
+            SlideShareException,
+            SlideShareErrorException {
+        logger.info("Called getSlideshowInfo with id=" + id + ", url=" + url);
+        Map<String, String> parameters = new HashMap<String, String>();
+        addParameter(parameters, "slideshow_id", id);
+        addParameter(parameters, "slideshow_url", url);
+        return sendGetMessage(URL_GET_SLIDESHOW_INFO, parameters).getSlideShowInfo();
     }
 
     public User getSlideshowByUser(String username) throws SlideShareException,
@@ -158,7 +171,6 @@ public class SlideShareAPIImpl implements SlideShareAPI {
 //        addParameter(parameters, "slideshow_id", id);
 //        return sendGetMessage(URL_DELETE_SLIDESHOW, parameters).getSlideShowId();
 //    }
-
     private Map<String, String> addParameter(Map<String, String> parameters,
             String name, String value) {
         if (value != null) {
@@ -209,7 +221,7 @@ public class SlideShareAPIImpl implements SlideShareAPI {
         }
         return result;
     }
-    
+
     private DocumentParserResult sendMessage(String url,
             Map<String, String> parameters, Map<String, File> files) throws
             SlideShareErrorException {

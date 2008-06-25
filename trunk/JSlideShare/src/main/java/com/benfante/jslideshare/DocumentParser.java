@@ -15,6 +15,7 @@ package com.benfante.jslideshare;
 
 import com.benfante.jslideshare.messages.Group;
 import com.benfante.jslideshare.messages.Slideshow;
+import com.benfante.jslideshare.messages.SlideshowInfo;
 import com.benfante.jslideshare.messages.Tag;
 import com.benfante.jslideshare.messages.User;
 import java.io.IOException;
@@ -34,14 +35,19 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author Lucio Benfante (<a href="mailto:lucio@benfante.com">lucio@benfante.com</a>)
  */
 public class DocumentParser extends DefaultHandler {
+
     public static final String COUNT_TAG = "count";
     public static final String DESCRIPTION_TAG = "Description";
     public static final String EMBED_CODE_TAG = "EmbedCode";
     public static final String GROUP_TAG = "Group";
     public static final String ID_ATTRIBUTE = "id";
+    public static final String ID_TAG = "ID";
+    public static final String LANGUAGE_TAG = "Language";
     public static final String MESSAGE_TAG = "Message";
     public static final String NAME_TAG = "name";
     public static final String PERMALINK_TAG = "Permalink";
+    public static final String PLAYER_DOC_TAG = "PlayerDoc";
+    public static final String RELATED_SLIDESHOWS_TAG = "RelatedSlideshows";
     public static final String SLIDESHOWS_TAG = "Slideshows";
     public static final String SLIDESHOW_ID_TAG = "SlideShowID";
     public static final String SLIDESHOW_TAG = "Slideshow";
@@ -49,13 +55,19 @@ public class DocumentParser extends DefaultHandler {
     public static final String SLIDESHOW_DELETED_TAG = "SlideShowDeleted";
     public static final String STATUS_DESCRIPTION_TAG = "StatusDescription";
     public static final String STATUS_TAG = "Status";
-    public static final String TAGS_TAG = "Tags";
     public static final String TAG_TAG = "Tag";
+    public static final String TAGS_TAG = "Tags";
     public static final String THUMBNAIL_TAG = "Thumbnail";
+    public static final String THUMBNAIL_URL_TAG = "ThumbnailURL";
+    public static final String THUMBNAIL_SMALL_URL_TAG = "ThumbnailSmallURL";
     public static final String TITLE_TAG = "Title";
+    public static final String TOTAL_SLIDES_TAG = "TotalSlides";
     public static final String USER_TAG = "User";
+    public static final String USER_ID_TAG = "UserID";
+    public static final String USER_LOGIN_TAG = "UserLogin";
+    public static final String URL_TAG = "URL";
+    public static final String URL_DOC_TAG = "URLDoc";
     public static final String VIEWS_TAG = "Views";
-
     private StringBuilder tempVal = new StringBuilder();
     private Slideshow tempSlideshow;
     private List<Slideshow> tempSlideshows;
@@ -67,6 +79,7 @@ public class DocumentParser extends DefaultHandler {
     private int tempCount;
     private String tempSlideShowId;
     private DocumentParserResult parserResult;
+    private SlideshowInfo tempSlideshowInfo;
 
     private DocumentParser() {
     }
@@ -98,6 +111,7 @@ public class DocumentParser extends DefaultHandler {
         tempVal.setLength(0);
         if (qName.equalsIgnoreCase(SLIDESHOW_TAG)) {
             tempSlideshow = new Slideshow();
+            tempSlideshowInfo = new SlideshowInfo();
         } else if (qName.equalsIgnoreCase(SLIDESHOWS_TAG)) {
             tempSlideshows = new LinkedList<Slideshow>();
         } else if (qName.equalsIgnoreCase(USER_TAG)) {
@@ -123,10 +137,17 @@ public class DocumentParser extends DefaultHandler {
     public void endElement(String uri, String localName,
             String qName) throws SAXException {
         if (qName.equalsIgnoreCase(SLIDESHOW_TAG)) {
-            tempSlideshows.add(tempSlideshow);
+            if (tempSlideshowInfo.getUrl() != null) { // I parsed a SlideshowInfo
+                createResult();
+                this.parserResult.setSlideShowInfo(tempSlideshowInfo);
+            } else {
+                tempSlideshows.add(tempSlideshow);
+            }
         } else if (qName.equalsIgnoreCase(SLIDESHOWS_TAG)) {
             createResult();
-            this.parserResult.setSlideShows(tempSlideshows);
+            if (!tempSlideshows.isEmpty()) {
+                this.parserResult.setSlideShows(tempSlideshows);
+            }
         } else if (qName.equalsIgnoreCase(USER_TAG)) {
             tempUser.setName(tempName);
             tempUser.setCount(tempCount);
@@ -156,16 +177,21 @@ public class DocumentParser extends DefaultHandler {
                     tempVal.toString());
         } else if (qName.equalsIgnoreCase(STATUS_TAG)) {
             tempSlideshow.setStatus(secureParseInt(tempVal.toString(), -1));
+            tempSlideshowInfo.setStatus(secureParseInt(tempVal.toString(), -1));
         } else if (qName.equalsIgnoreCase(STATUS_DESCRIPTION_TAG)) {
             tempSlideshow.setStatusDescription(tempVal.toString());
         } else if (qName.equalsIgnoreCase(TITLE_TAG)) {
             tempSlideshow.setTitle(tempVal.toString());
+            tempSlideshowInfo.setTitle(tempVal.toString());
         } else if (qName.equalsIgnoreCase(DESCRIPTION_TAG)) {
             tempSlideshow.setDescription(tempVal.toString());
+            tempSlideshowInfo.setDescription(tempVal.toString());
         } else if (qName.equalsIgnoreCase(TAGS_TAG)) {
             tempSlideshow.setTags(tempVal.toString());
+            tempSlideshowInfo.setTags(tempVal.toString());
         } else if (qName.equalsIgnoreCase(EMBED_CODE_TAG)) {
             tempSlideshow.setEmbedCode(tempVal.toString());
+            tempSlideshowInfo.setEmbedCode(tempVal.toString());
         } else if (qName.equalsIgnoreCase(THUMBNAIL_TAG)) {
             tempSlideshow.setThumbnail(tempVal.toString());
         } else if (qName.equalsIgnoreCase(PERMALINK_TAG)) {
@@ -178,6 +204,29 @@ public class DocumentParser extends DefaultHandler {
             tempCount = secureParseInt(tempVal.toString(), -1);
         } else if (qName.equalsIgnoreCase(SLIDESHOW_ID_TAG)) {
             tempSlideShowId = tempVal.toString();
+        } else if (qName.equals(ID_TAG)) {
+            tempSlideshowInfo.setId(tempVal.toString());
+        } else if (qName.equals(PLAYER_DOC_TAG)) {
+            tempSlideshowInfo.setPlayerDoc(tempVal.toString());
+        } else if (qName.equalsIgnoreCase(TOTAL_SLIDES_TAG)) {
+            tempSlideshowInfo.setTotalSlides(secureParseInt(tempVal.toString(),
+                    0));
+        } else if (qName.equals(URL_DOC_TAG)) {
+            tempSlideshowInfo.setUrlDoc(tempVal.toString());
+        } else if (qName.equals(LANGUAGE_TAG)) {
+            tempSlideshowInfo.setLanguage(tempVal.toString());
+        } else if (qName.equals(URL_TAG)) {
+            tempSlideshowInfo.setUrl(tempVal.toString());
+        } else if (qName.equals(USER_ID_TAG)) {
+            tempSlideshowInfo.setUserId(tempVal.toString());
+        } else if (qName.equals(USER_LOGIN_TAG)) {
+            tempSlideshowInfo.setUserLogin(tempVal.toString());
+        } else if (qName.equals(RELATED_SLIDESHOWS_TAG)) {
+            tempSlideshowInfo.setRelatedSlideshows(tempVal.toString());
+        } else if (qName.equals(THUMBNAIL_URL_TAG)) {
+            tempSlideshowInfo.setThumbnailUrl(tempVal.toString());
+        } else if (qName.equals(THUMBNAIL_SMALL_URL_TAG)) {
+            tempSlideshowInfo.setThumbnailSmallUrl(tempVal.toString());
         }
     }
 
@@ -190,7 +239,7 @@ public class DocumentParser extends DefaultHandler {
         }
         return result;
     }
-    
+
     private void createResult() {
         if (this.parserResult == null) {
             this.parserResult = new DocumentParserResult();

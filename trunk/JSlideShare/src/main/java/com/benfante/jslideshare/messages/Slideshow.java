@@ -13,6 +13,8 @@
 // limitations under the License.
 package com.benfante.jslideshare.messages;
 
+import com.benfante.jslideshare.utils.Utils;
+
 /**
  * The slideshow document.
  *
@@ -100,6 +102,10 @@ public class Slideshow {
 
     public void setViews(int views) {
         this.views = views;
+    }
+
+    public String[] getTagArray() {
+        return Utils.splitCsvLine(this.tags);
     }
 
     @Override
