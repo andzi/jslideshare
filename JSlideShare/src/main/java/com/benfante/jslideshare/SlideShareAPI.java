@@ -15,6 +15,7 @@ package com.benfante.jslideshare;
 
 import com.benfante.jslideshare.messages.Group;
 import com.benfante.jslideshare.messages.Slideshow;
+import com.benfante.jslideshare.messages.SlideshowInfo;
 import com.benfante.jslideshare.messages.Tag;
 import com.benfante.jslideshare.messages.User;
 import java.io.File;
@@ -37,6 +38,18 @@ public interface SlideShareAPI {
     Slideshow getSlideshow(String id) throws SlideShareException,
             SlideShareErrorException;
 
+    /**
+     * Retrieve a slideshow using its id or its URL. If both are specified (not null or empty), the id has the precedence.
+     * 
+     * @param id The slideshow id
+     * @param url The slideshow URL
+     * @return The slideshow
+     * @throws com.benfante.jslideshare.SlideShareException In case of a SlideShareServiceError
+     * @throws com.benfante.jslideshare.SlideShareErrorException In case of an error using the service (IO error, timeouts, http status other than OK, etc.)
+     */
+    SlideshowInfo getSlideshowInfo(String id, String url) throws SlideShareException,
+            SlideShareErrorException;
+    
     /**
      * Retrieve slideshows for a given user.
      * 

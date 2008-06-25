@@ -33,6 +33,8 @@ public class App {
                 SHARED_SECRET);
         System.out.println(ssapi.getSlideshow("142806"));
         Thread.sleep(2000);
+        System.out.println(ssapi.getSlideshowInfo(null, "http://www.slideshare.net/benfante/using-daos-without-implementing-them"));
+        Thread.sleep(2000);
         System.out.println(ssapi.getSlideshowByUser("john.leach"));
         Thread.sleep(2000);
         System.out.println(ssapi.getSlideshowByUser("john.leach", 1, 1));

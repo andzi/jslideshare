@@ -15,6 +15,7 @@ package com.benfante.jslideshare;
 
 import com.benfante.jslideshare.messages.Group;
 import com.benfante.jslideshare.messages.Slideshow;
+import com.benfante.jslideshare.messages.SlideshowInfo;
 import com.benfante.jslideshare.messages.Tag;
 import com.benfante.jslideshare.messages.User;
 import java.io.File;
@@ -55,6 +56,7 @@ public class SlideShareAPITest extends TestCase {
                 "Presentation of Groovy and Grails made at the JUG Padova on 17 May 2008",
                 result.getDescription());
         assertEquals("grails,groovy", result.getTags());
+        assertEquals(2, result.getTagArray().length);
         assertEquals(
                 "<object type=\"application/x-shockwave-flash\" data=\"http://s3.amazonaws.com/slideshare/ssplayer.swf?id=414888&doc=groovyandgrails-1211192948866493-8&branding=no\" width=\"425\" height=\"348\"><param name=\"movie\" value=\"http://s3.amazonaws.com/slideshare/ssplayer.swf?id=414888&doc=groovyandgrails-1211192948866493-8&branding=no\" /></object>",
                 result.getEmbedCode());
@@ -65,6 +67,43 @@ public class SlideShareAPITest extends TestCase {
                 "http://www.slideshare.net/john.leach/groovy-and-grails-jug-padova",
                 result.getPermalink());
         assertEquals(25, result.getViews());
+    }
+
+    public void testGetSlideshowInfo() throws Exception {
+        SlideShareAPI instance = new SlideShareAPIImpl(
+                new MockSlideShareConnector(
+                "xml/messages/get_slideshow_info.xml"));
+        SlideshowInfo result = instance.getSlideshowInfo(null, "what you want");
+        assertEquals("142806", result.getId());
+        assertEquals(2, result.getStatus());
+        assertEquals("Using DAOs without implementing them", result.getTitle());
+        assertEquals(
+                "With Parancoe (www.parancoe.org) You can define and use your DAOs without implementing them. This speeds up the development of your application and the satisfaction of the developers. This presentation was held at the JavaDay in Torino, the October 20, 2007.",
+                result.getDescription());
+        assertEquals("dao,parancoe,dao,hibernate,jpa", result.getTags());
+        assertEquals(5, result.getTagArray().length);
+        assertEquals(
+                "<div style=\"width:425px;text-align:left\" id=\"__ss_142806\"><object style=\"margin:0px\" width=\"425\" height=\"355\"><param name=\"movie\" value=\"http://static.slideshare.net/swf/ssplayer2.swf?doc=using-daos-without-implementing-them-1193116570658927-4\"/><param name=\"allowFullScreen\" value=\"true\"/><param name=\"allowScriptAccess\" value=\"always\"/><embed src=\"http://static.slideshare.net/swf/ssplayer2.swf?doc=using-daos-without-implementing-them-1193116570658927-4\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"425\" height=\"355\"></embed></object><div style=\"font-size:11px;font-family:tahoma,arial;height:26px;padding-top:2px;\"><a href=\"http://www.slideshare.net/?src=apiembed\"><img src=\"http://static.slideshare.net/swf/logo_embd.png\" style=\"border:0px none;margin-bottom:-5px\" alt=\"SlideShare\"/></a> | <a href=\"http://www.slideshare.net/benfante/using-daos-without-implementing-them?src=apiembed\" title=\"View Using DAOs without implementing them on SlideShare\">View</a> | <a href=\"http://www.slideshare.net/upload?src=apiembed\">Upload your own</a></div></div>",
+                result.getEmbedCode());
+        assertEquals("using-daos-without-implementing-them-1193116570658927-4",
+                result.getPlayerDoc());
+        assertEquals(29, result.getTotalSlides());
+        assertEquals("using-daos-without-implementing-them", result.getUrlDoc());
+        assertEquals("en", result.getLanguage());
+        assertEquals(
+                "http://www.slideshare.net/benfante/using-daos-without-implementing-them",
+                result.getUrl());
+        assertEquals("198837", result.getUserId());
+        assertEquals("benfante", result.getUserLogin());
+        assertEquals("96741,38699,193375,134318,44689,69765,31664,68855,69943,",
+                result.getRelatedSlideshows());
+        assertEquals(9, result.getRelatedSlideshowsArray().length);
+        assertEquals(
+                "http://cdn.slideshare.net/using-daos-without-implementing-them-1193116570658927-4-thumbnail?1193116571",
+                result.getThumbnailUrl());
+        assertEquals(
+                "http://cdn.slideshare.net/using-daos-without-implementing-them-1193116570658927-4-thumbnail-2",
+                result.getThumbnailSmallUrl());
     }
 
     /**
