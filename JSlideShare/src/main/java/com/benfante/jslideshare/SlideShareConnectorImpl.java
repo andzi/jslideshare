@@ -13,6 +13,7 @@
 // limitations under the License.
 package com.benfante.jslideshare;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -164,7 +165,7 @@ public class SlideShareConnectorImpl implements SlideShareConnector {
         if (logger.isDebugEnabled()) {
             logger.debug(method.getResponseBodyAsString());
         }
-        InputStream result = method.getResponseBodyAsStream();
+        InputStream result = new ByteArrayInputStream(method.getResponseBody());
         method.releaseConnection();
         return result;
     }
@@ -211,7 +212,7 @@ public class SlideShareConnectorImpl implements SlideShareConnector {
         if (logger.isDebugEnabled()) {
             logger.debug(method.getResponseBodyAsString());
         }
-        InputStream result = method.getResponseBodyAsStream();
+        InputStream result = new ByteArrayInputStream(method.getResponseBody());
         method.releaseConnection();
         return result;
     }
@@ -248,7 +249,7 @@ public class SlideShareConnectorImpl implements SlideShareConnector {
         if (logger.isDebugEnabled()) {
             logger.debug(method.getResponseBodyAsString());
         }
-        InputStream result = method.getResponseBodyAsStream();
+        InputStream result = new ByteArrayInputStream(method.getResponseBody());
         method.releaseConnection();
         return result;
     }
