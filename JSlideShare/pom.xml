@@ -4,7 +4,7 @@
     <groupId>com.benfante</groupId>
     <artifactId>JSlideShare</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.6</version>
     <name>JSlideShare</name>
     <url>http://code.google.com/p/jslideshare/</url>
     <repositories>
@@ -96,9 +96,9 @@
         </repository>
     </distributionManagement>
     <scm>
-        <connection>scm:svn:http://jslideshare.googlecode.com/svn/trunk</connection>
-        <developerConnection>scm:svn:https://jslideshare.googlecode.com/svn/trunk</developerConnection>
-        <url>http://jslideshare.googlecode.com/svn/trunk</url>
+        <connection>scm:svn:http://jslideshare.googlecode.com/svn/tags/JSlideShare-0.6</connection>
+        <developerConnection>scm:svn:https://jslideshare.googlecode.com/svn/tags/JSlideShare-0.6</developerConnection>
+        <url>http://jslideshare.googlecode.com/svn/tags/JSlideShare-0.6</url>
     </scm>
     <issueManagement>
         <system>Google Code Issues</system>
