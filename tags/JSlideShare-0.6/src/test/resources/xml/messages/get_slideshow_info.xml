@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Slideshow>
+  <ID>142806</ID>
+  <Title>Using DAOs without implementing them</Title>
+  <Description>With Parancoe (www.parancoe.org) You can define and use your DAOs without implementing them. This speeds up the development of your application and the satisfaction of the developers. This presentation was held at the JavaDay in Torino, the October 20, 2007.</Description>
+  <Status>2</Status>
+  <EmbedCode>&lt;div style="width:425px;text-align:left" id="__ss_142806"&gt;&lt;object style="margin:0px" width="425" height="355"&gt;&lt;param name="movie" value="http://static.slideshare.net/swf/ssplayer2.swf?doc=using-daos-without-implementing-them-1193116570658927-4"/&gt;&lt;param name="allowFullScreen" value="true"/&gt;&lt;param name="allowScriptAccess" value="always"/&gt;&lt;embed src="http://static.slideshare.net/swf/ssplayer2.swf?doc=using-daos-without-implementing-them-1193116570658927-4" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"&gt;&lt;/embed&gt;&lt;/object&gt;&lt;div style="font-size:11px;font-family:tahoma,arial;height:26px;padding-top:2px;"&gt;&lt;a href="http://www.slideshare.net/?src=apiembed"&gt;&lt;img src="http://static.slideshare.net/swf/logo_embd.png" style="border:0px none;margin-bottom:-5px" alt="SlideShare"/&gt;&lt;/a&gt; | &lt;a href="http://www.slideshare.net/benfante/using-daos-without-implementing-them?src=apiembed" title="View Using DAOs without implementing them on SlideShare"&gt;View&lt;/a&gt; | &lt;a href="http://www.slideshare.net/upload?src=apiembed"&gt;Upload your own&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;</EmbedCode>
+  <PlayerDoc>using-daos-without-implementing-them-1193116570658927-4</PlayerDoc>
+  <TotalSlides>29</TotalSlides>
+  <URLDoc>using-daos-without-implementing-them</URLDoc>
+  <Language>en</Language>
+  <URL>http://www.slideshare.net/benfante/using-daos-without-implementing-them</URL>
+  <UserID>198837</UserID>
+  <UserLogin>benfante</UserLogin>
+  <RelatedSlideshows>96741,38699,193375,134318,44689,69765,31664,68855,69943,</RelatedSlideshows>
+  <ThumbnailURL>http://cdn.slideshare.net/using-daos-without-implementing-them-1193116570658927-4-thumbnail?1193116571</ThumbnailURL>
+  <ThumbnailSmallURL>http://cdn.slideshare.net/using-daos-without-implementing-them-1193116570658927-4-thumbnail-2</ThumbnailSmallURL>
+  <Tags>dao,parancoe,dao,hibernate,jpa</Tags>
+</Slideshow>
