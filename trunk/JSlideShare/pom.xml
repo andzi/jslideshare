@@ -67,6 +67,13 @@
                 </executions>
             </plugin>
         </plugins>
+        <extensions>
+            <extension>
+               <groupId>org.apache.maven.wagon</groupId>
+               <artifactId>wagon-ssh</artifactId>
+               <version>2.6</version>
+            </extension>
+        </extensions>        
     </build>
     <dependencies>
         <dependency>
@@ -96,9 +103,9 @@
         </repository>
     </distributionManagement>
     <scm>
-        <connection>scm:svn:http://jslideshare.googlecode.com/svn/tags/JSlideShare-0.6</connection>
-        <developerConnection>scm:svn:https://jslideshare.googlecode.com/svn/tags/JSlideShare-0.6</developerConnection>
-        <url>http://jslideshare.googlecode.com/svn/tags/JSlideShare-0.6</url>
+        <connection>scm:svn:http://jslideshare.googlecode.com/svn/trunk/</connection>
+        <developerConnection>scm:svn:https://jslideshare.googlecode.com/svn/trunk/</developerConnection>
+        <url>https://jslideshare.googlecode.com/svn/trunk/</url>
     </scm>
     <issueManagement>
         <system>Google Code Issues</system>
