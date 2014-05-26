@@ -35,19 +35,19 @@ public class SlideShareAPIImpl implements SlideShareAPI {
     private static final Logger logger = Logger.getLogger(
             SlideShareAPIImpl.class);
     public static final String URL_GET_SLIDESHOW =
-            "http://www.slideshare.net/api/1/get_slideshow";
+            "https://www.slideshare.net/api/1/get_slideshow";
     public static final String URL_GET_SLIDESHOW_INFO =
-            "http://www.slideshare.net/api/1/get_slideshow_info";
+            "https://www.slideshare.net/api/1/get_slideshow_info";
     public static final String URL_GET_SLIDESHOW_BY_USER =
-            "http://www.slideshare.net/api/1/get_slideshow_by_user";
+            "https://www.slideshare.net/api/1/get_slideshow_by_user";
     public static final String URL_GET_SLIDESHOW_BY_TAG =
-            "http://www.slideshare.net/api/1/get_slideshow_by_tag";
+            "https://www.slideshare.net/api/1/get_slideshow_by_tag";
     public static final String URL_GET_SLIDESHOW_BY_GROUP =
-            "http://www.slideshare.net/api/1/get_slideshow_from_group";
+            "https://www.slideshare.net/api/1/get_slideshow_from_group";
     public static final String URL_UPLOAD_SLIDESHOW =
-            "http://www.slideshare.net/api/1/upload_slideshow";
+            "https://www.slideshare.net/api/1/upload_slideshow";
     public static final String URL_DELETE_SLIDESHOW =
-            "http://www.slideshare.net/api/1/delete_slideshow";
+            "https://www.slideshare.net/api/1/delete_slideshow";
     protected SlideShareConnector connector;
 
     public SlideShareAPIImpl() {
