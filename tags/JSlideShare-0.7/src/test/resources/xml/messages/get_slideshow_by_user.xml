@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<User>
+  <name>john.leach</name>
+  <count>3</count>
+  <Slideshow>
+    <ID>414888</ID>
+    <EmbedCode>&lt;object type="application/x-shockwave-flash" data="http://s3.amazonaws.com/slideshare/ssplayer.swf?id=414888&amp;doc=groovyandgrails-1211192948866493-8&amp;branding=no" width="425" height="348"&gt;&lt;param name="movie" value="http://s3.amazonaws.com/slideshare/ssplayer.swf?id=414888&amp;doc=groovyandgrails-1211192948866493-8&amp;branding=no" /&gt;&lt;/object&gt;</EmbedCode>
+    <Thumbnail>http://cdn.slideshare.net/groovyandgrails-1211192948866493-8-thumbnail-2?1211194357</Thumbnail>
+    <Title>Groovy And Grails JUG Padova</Title>
+    <Description>Presentation of Groovy and Grails made at the JUG Padova on 17 May 2008</Description>
+    <Status>2</Status>
+    <StatusDescription>ready</StatusDescription>
+    <Location>groovyandgrails-1211192948866493-8</Location>
+    <Permalink>http://www.slideshare.net/john.leach/groovy-and-grails-jug-padova</Permalink>
+    <Views>33</Views>
+    <Tags>grails,groovy</Tags>
+    <Transcript></Transcript>
+  </Slideshow>
+  <Slideshow>
+    <ID>414891</ID>
+    <EmbedCode>&lt;object type="application/x-shockwave-flash" data="http://s3.amazonaws.com/slideshare/ssplayer.swf?id=414891&amp;doc=groovyandgrails-1211193024963495-8&amp;branding=no" width="425" height="348"&gt;&lt;param name="movie" value="http://s3.amazonaws.com/slideshare/ssplayer.swf?id=414891&amp;doc=groovyandgrails-1211193024963495-8&amp;branding=no" /&gt;&lt;/object&gt;</EmbedCode>
+    <Thumbnail>http://cdn.slideshare.net/groovyandgrails-1211193024963495-8-thumbnail-2?1211194443</Thumbnail>
+    <Title>Groovy And Grails JUG Trento</Title>
+    <Description>Presentation of Groovy and Grails for the JUG Trento, 11 June 2008</Description>
+    <Status>2</Status>
+    <StatusDescription>ready</StatusDescription>
+    <Location>groovyandgrails-1211193024963495-8</Location>
+    <Permalink>http://www.slideshare.net/john.leach/groovy-and-grails-jug-trento</Permalink>
+    <Views>19</Views>
+    <Tags>grails,groovy</Tags>
+    <Transcript></Transcript>
+  </Slideshow>
+  <Slideshow>
+    <ID>414892</ID>
+    <EmbedCode>&lt;object type="application/x-shockwave-flash" data="http://s3.amazonaws.com/slideshare/ssplayer.swf?id=414892&amp;doc=groovyandgrails-1211193086254808-8&amp;branding=no" width="425" height="348"&gt;&lt;param name="movie" value="http://s3.amazonaws.com/slideshare/ssplayer.swf?id=414892&amp;doc=groovyandgrails-1211193086254808-8&amp;branding=no" /&gt;&lt;/object&gt;</EmbedCode>
+    <Thumbnail>http://cdn.slideshare.net/groovyandgrails-1211193086254808-8-thumbnail-2?1211194673</Thumbnail>
+    <Title>Groovy And Grails JUG Sardegna</Title>
+    <Description>Presentation of Groovy and Grails for the JUG Sardegna, 14 June 2008</Description>
+    <Status>2</Status>
+    <StatusDescription>ready</StatusDescription>
+    <Location>groovyandgrails-1211193086254808-8</Location>
+    <Permalink>http://www.slideshare.net/john.leach/groovy-and-grails-jug-sardegna</Permalink>
+    <Views>19</Views>
+    <Tags>grails,groovy</Tags>
+    <Transcript></Transcript>
+  </Slideshow>
+</User>
