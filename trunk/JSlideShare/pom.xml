@@ -103,9 +103,9 @@
         </repository>
     </distributionManagement>
     <scm>
-        <connection>scm:svn:http://jslideshare.googlecode.com/svn/trunk/</connection>
-        <developerConnection>scm:svn:https://jslideshare.googlecode.com/svn/trunk/</developerConnection>
-        <url>https://jslideshare.googlecode.com/svn/trunk/</url>
+        <connection>scm:svn:http://jslideshare.googlecode.com/svn/trunk/JSlideShare</connection>
+        <developerConnection>scm:svn:https://jslideshare.googlecode.com/svn/trunk/JSlideShare</developerConnection>
+        <url>https://jslideshare.googlecode.com/svn/trunk/JSlideShare</url>
     </scm>
     <issueManagement>
         <system>Google Code Issues</system>
